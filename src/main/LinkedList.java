@@ -1,21 +1,31 @@
 package main;
 
+import java.util.NoSuchElementException;
+
 public class LinkedList <T> {
 
-    private class Node {
+    public class Node {
         T data;
         Node next;
 
         public Node(T data) {
             this.data = data;
         }
+        public Node next() {
+            return next;
+        }
+
+        public T getData() {
+            return data;
+        }
+
     }
 
-    Node head = null, tail = null;
+    private Node head = null, tail = null;
     int size = 0;
 
-    public void addNode(T data) {
-        Node temp = new Node(data);
+    public void addNode(Object data) {
+        Node temp = new Node((T)data);
         if (head == null) {
             head = tail = temp;
         } else {
@@ -122,6 +132,22 @@ public class LinkedList <T> {
         buffer.append(trav.data);
         System.out.println(buffer.toString());
         return buffer.toString();
+    }
+
+    public Node getHead() {
+        Node head = this.head;
+        if (head == null) {
+            throw new NoSuchElementException();
+        }
+        return head;
+    }
+
+    public T getElement(Object elem) {
+        Node trav = this.head;
+        while (!trav.equals(elem)) {
+            trav = trav.next;
+        }
+        return (T) trav.data;
     }
 
     public int size() {
